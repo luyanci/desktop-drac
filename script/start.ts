@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
     ),
   })
 
-  const hotMiddleware = HotMiddleware(compiler)
+  const hotMiddleware = HotMiddleware(compiler as any)
 
   const server = createServer((req, res) => {
     devMiddleware(req, res, () => {
