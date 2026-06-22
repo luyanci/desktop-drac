@@ -13,22 +13,6 @@ const options: SpawnSyncOptions = {
   stdio: 'inherit',
 }
 
-/** Check if the caller has set the OFFLINe environment variable */
-function isOffline() {
-  return process.env.OFFLINE === '1'
-}
-
-/** Format the arguments to ensure these work offline */
-function getYarnArgs(baseArgs: Array<string>): Array<string> {
-  const args = baseArgs
-
-  if (isOffline()) {
-    args.splice(1, 0, '--offline')
-  }
-
-  return args
-}
-
 const captureOutputOptions: SpawnSyncOptions = {
   cwd: root,
   encoding: 'utf8',
@@ -58,38 +42,40 @@ function findYarnVersion(callback: (path: string) => void) {
 }
 
 findYarnVersion(path => {
-  const installArgs = getYarnArgs([path, '--cwd', 'app', 'install', '--force'])
-
-  let result = spawnSync('node', installArgs, options)
-
-  if (result.status !== 0) {
-    process.exit(result.status || 1)
-  }
-
-  if (!isOffline()) {
-    result = spawnSync(
-      'git',
-      ['submodule', 'update', '--recursive', '--init'],
-      options
-    )
-
-    if (result.status !== 0) {
-      process.exit(result.status || 1)
-    }
-  }
-
-  result = spawnSync('node', getYarnArgs([path, 'compile:script']), options)
+  let result = spawnSync(
+    'node',
+    [path, '--cwd', 'app', 'install', '--force'],
+    options
+  )
 
   if (result.status !== 0) {
     process.exit(result.status || 1)
   }
 
-  if (process.platform === 'linux') {
-    result = spawnSync('node', getYarnArgs([path, 'patch-package']), options)
+  // Electron >= 42 no longer downloads its prebuilt binary in its own
+  // postinstall; do it eagerly so scripts that read node_modules/electron/dist
+  // (e.g. validate-macos-version) keep working without first requiring electron.
+  const electronInstallScript = require.resolve('electron/install.js')
+  result = spawnSync(process.execPath, [electronInstallScript], options)
 
-    if (result.status !== 0) {
-      process.exit(result.status || 1)
-    }
+  if (result.status !== 0) {
+    process.exit(result.status || 1)
+  }
+
+  result = spawnSync(
+    'git',
+    ['submodule', 'update', '--recursive', '--init'],
+    options
+  )
+
+  if (result.status !== 0) {
+    process.exit(result.status || 1)
+  }
+
+  result = spawnSync('node', [path, 'compile:script'], options)
+
+  if (result.status !== 0) {
+    process.exit(result.status || 1)
   }
 
   // Capture output here so CI failures include the Playwright-specific error.

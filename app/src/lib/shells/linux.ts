@@ -1,6 +1,7 @@
 import { ChildProcess } from 'child_process'
 import { assertNever } from '../fatal-error'
 import { parseEnumValue } from '../enum'
+import { pathExists } from '../path-exists'
 import { FoundShell } from './shared'
 import {
   expandTargetPathArgument,
