@@ -38,7 +38,7 @@ const rendererConfig = merge({}, common.renderer, config, {
       // build script immediately blows away dist after webpack is done
       // compiling the source into bundles
       reportFilename: 'renderer.report.html',
-    }),
+    }) as any,
   ],
 })
 

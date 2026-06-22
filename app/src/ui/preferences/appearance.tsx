@@ -39,7 +39,6 @@ interface IAppearanceProps {
   readonly onSelectedNumberFormatChanged: (format: INumberFormat) => void
   readonly preferAbsoluteDates: boolean
   readonly onPreferAbsoluteDatesChanged: (value: boolean) => void
-
 }
 
 interface IAppearanceState {
@@ -117,7 +116,7 @@ export class Appearance extends React.Component<
     const titleBarStyle = event.currentTarget.value as TitleBarStyle
     this.setState({ titleBarStyle })
     this.props.onTitleBarStyleChanged(titleBarStyle)
-}    
+  }
   private onDateFormatChanged = (event: React.FormEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value
     const match = dateFormats.find(f => f.pattern === value)
