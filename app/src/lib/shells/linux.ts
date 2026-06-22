@@ -9,7 +9,7 @@ import {
   parseCustomIntegrationArguments,
   spawnCustomIntegration,
 } from '../custom-integration'
-import { pathExists, spawn } from '../helpers/linux'
+import { spawn } from '../helpers/linux'
 
 export enum Shell {
   Gnome = 'GNOME Terminal',
