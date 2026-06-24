@@ -34,7 +34,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
 
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
 
@@ -84,7 +84,7 @@ jobs:
     outputs:
       skip: ${{ steps.version.outputs.skip }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
           fetch-depth: 0
@@ -171,7 +171,7 @@ jobs:
       'refs/tags/') || (github.event_name == 'workflow_dispatch' &&
       github.event.inputs.version != ''))
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -247,7 +247,7 @@ jobs:
       'refs/tags/') || (github.event_name == 'workflow_dispatch' &&
       github.event.inputs.version != ''))
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
