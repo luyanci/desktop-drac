@@ -3,7 +3,7 @@
   "productName": "GitHub Desktop",
   "bundleID": "com.github.GitHubClient",
   "companyName": "GitHub, Inc.",
-  "version": "3.5.13-beta3",
+  "version": "3.6.0",
   "main": "./main.js",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "desktop-notifications": "file:../vendor/desktop-notifications",
     "desktop-trampoline": "file:../vendor/desktop-trampoline",
     "dexie": "^3.2.3",
-    "dompurify": "^3.4.0",
+    "dompurify": "^3.4.11",
     "dugite": "^3.2.2",
     "electron-window-state": "^5.0.3",
     "event-kit": "^2.0.0",
