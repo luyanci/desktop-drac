@@ -201,7 +201,7 @@ jobs:
           echo "RELEASE_TAG_WITHOUT_PREFIX=${tagNameWithoutPrefix}" >> $GITHUB_ENV
 
       - name: Create and push tag
-        if: github.event_name == 'workflow_dispatch'
+        if: false
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -260,6 +260,7 @@ jobs:
 
       - name: Build APT repo
         env:
+          GPG_TTY: /dev/null
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         run: bash scripts/update-apt-repo.sh ./debs
 
